@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cover Letter Introduction</title>
+
+  <style>
+    :root {
+      --bg: #0e0e11;
+      --panel: #15151d;
+      --text: #eaeaf0;
+      --muted: #a0a0b2;
+      --accent: #8fa7b3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+body {
+  min-height: 100vh;
+  padding-bottom: 20vh; /* extra space to scroll */
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.orbs, .grain {
+  will-change: transform;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* ---------- ATMOSPHERE LAYERS ---------- */
+    .atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  opacity: 0.06;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  background-size: 8px 8px;
+}
+
+
+.orbs {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(400px 400px at 15% 30%, rgba(143,167,179,0.08), transparent 70%),
+    radial-gradient(500px 500px at 80% 65%, rgba(255,255,255,0.05), transparent 75%);
+  will-change: transform;
+}
+
+
+    @keyframes drift {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-40px, 30px); }
+    }
+
+    /* ---------- FULL SCREEN LOADER ---------- */
+    .loader-screen {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(1000px 800px at 20% 30%, rgba(109,213,237,0.09), transparent 99%),
+        radial-gradient(900px 700px at 80% 70%, rgba(255,255,255,0.05), transparent 65%),
+        linear-gradient(120deg, var(--bg), var(--panel), var(--bg));
+      background-size: 140% 140%;
+      animation: breathe 18s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: opacity 1.2s ease;
+    }
+
+    @keyframes breathe {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .loader-content {
+      text-align: center;
+      letter-spacing: 0.15em;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .loader-line {
+      width: 0%;
+      height: 1.75px;
+      background: var(--accent);
+      margin: 16px auto 0;
+      animation: lineGrow 2.2s ease forwards;
+    }
+
+    @keyframes lineGrow { to { width: 220px; } }
+
+    /* ---------- MAIN CONTENT ---------- */
+.main {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 22vh;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+
+    .container {
+      max-width: 700px;
+      padding: 40px;
+      line-height: 1.65;
+    }
+
+    .intro {
+      font-size: 1.8rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+      min-height: 2.4em;
+      border-right: 2px solid var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .content {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .para {
+      max-width: 640px;
+      margin-top: 28px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .para.primary { margin-top: 0; }
+    .para.secondary { padding-left: 18px; }
+    .para.closing {
+      margin-top: 40px;
+      color: rgba(234,234,240,0.85);
+      font-weight: 500;
+      padding-left: 0;
+    }
+
+    .para.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .highlight {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* Glass capsule for password */
+#passwordWrapper {
+  display: none;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#passwordInput {
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 999px; /* capsule shape */
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px) saturate(150%);
+  color: var(--text);
+  outline: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: 240px;
+  text-align: center;
+}
+
+#passwordInput:focus {
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(1.03);
+}
+
+#passwordMessage {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--accent);
+  display: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+  </style>
+</head>
+
+<body>
+
+  <!-- Atmosphere -->
+  <div class="atmosphere">
+    <div class="orbs"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- Loader -->
+<!-- Loader -->
+<div id="loader" class="loader-screen">
+  <div class="loader-content">
+    <span id="initText">Initialising correspondence</span>
+    <div class="loader-line"></div>
+
+    <!-- Password Input -->
+    <div id="passwordWrapper">
+      <input id="passwordInput" type="password" placeholder="Enter password">
+      <div id="passwordMessage">Incorrect password</div>
+    </div>
+  </div>
+</div>
+
+
+
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div id="main" class="main">
+    <div class="container">
+
+      <div id="typing" class="intro"></div>
+
+<div class="content">
+  <p class="para primary">
+    Most people notice IT systems only when something breaks, and the dependence on them is only fully realised when an organisation can no longer operate due to it. When systems fail, simple tasks become harder than they should be, and people are forced to work around problems that should not exist.
+  </p>
+
+  <p class="para secondary">
+    Although IT is rarely the most visible part of a business, its importance continues to grow as technology becomes deeply embedded in everyday operations.
+  </p>
+
+  <p class="para secondary">
+    I am aware that a cover letter traditionally exists to sell the applicant. In this case, however, I do not rely on embellishment or self-promotion.
+  </p>
+
+  <p class="para secondary">
+    I rely on a personally established cognitive approach to recognise that reliable systems exist to support people, business operations, and the customer experience too.
+  </p>
+
+  <p class="para secondary">
+    That mindset has been shaped through both formal study and hands-on experience. I taught myself to code in Unity (a game engine) using C#, as well as HTML, JavaScript, and CSS, completed a Certificate III in ICT through Years 10 and 11, and received the ICT subject award for both years. More importantly, these experiences trained me to notice patterns, inconsistencies, and points of failure before they escalate — an approach that aligns directly with documenting incidents, following procedures, and maintaining dependable systems, including improving them through creative means.
+  </p>
+
+  <p class="para secondary">
+    While my technical skills and achievements form an important foundation, they are not what ultimately motivate me. I place a high value on contributing in a way that is useful, reliable, and meaningful to the community around me. The opportunity to apply my skills in a role that supports local services and the people who rely on them is something I take seriously, and it is a key reason I am drawn to working within Local Government.
+  </p>
+
+  <p class="para secondary">
+    Alongside this, I am intentional about learning how organisations function beyond the technical layer. My long-term goal is to build and run my own business, and I understand that this requires a solid grasp of processes, accountability, and how decisions are made within a structured environment. This traineeship offers exposure to the operational side of an organisation — how systems, people, and procedures work together to keep services running reliably. Learning this within Local Government, where outcomes matter to the community, is an experience I see as both practical and valuable.
+  </p>
+
+  <p class="para closing">
+    For these reasons, the Information Technology and Business Systems Traineeship represents a role where my technical skills, cognitive approach, and values can be applied in a way that is both practical and purposeful. I am motivated to contribute reliable, well-considered work, to learn within a structured environment, and to support the systems that allow the organisation to operate effectively. I would welcome the opportunity to bring this mindset to the Bass Coast Shire Council.
+  </p>
+</div>
+
+  </div>
+
+  <script>
+const loader = document.getElementById("loader");
+const main = document.getElementById("main");
+const typingElement = document.getElementById("typing");
+const paragraphs = document.querySelectorAll(".para");
+
+const password = "19731976007"; // your password
+const passwordWrapper = document.getElementById("passwordWrapper");
+const passwordInput = document.getElementById("passwordInput");
+const passwordMessage = document.getElementById("passwordMessage");
+const initText = document.getElementById("initText");
+
+const text = "Dear Hiring Manager,";
+let index = 0;
+
+function type() {
+  if (index < text.length) {
+    typingElement.textContent += text.charAt(index);
+    index++;
+    setTimeout(type, 80);
+  } else {
+    typingElement.style.borderRight = "none";
+    paragraphs.forEach((p, i) => {
+      setTimeout(() => p.classList.add("visible"), 600 + i * 300);
+    });
+  }
+}
+
+// Initial fade out of "Initialising correspondence"
+setTimeout(() => {
+  initText.style.transition = "opacity 1s ease";
+  initText.style.opacity = "0";
+
+  const loaderLine = loader.querySelector(".loader-line");
+  loaderLine.style.transition = "opacity 1s ease";
+  loaderLine.style.opacity = "0";
+
+  setTimeout(() => {
+    // Fade in password wrapper
+    passwordWrapper.style.display = "flex";
+    setTimeout(() => passwordWrapper.style.opacity = "1", 50); // small delay for smooth fade
+
+    passwordInput.focus();
+    
+    passwordInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        if (passwordInput.value === password) {
+          // Fade out password wrapper
+          passwordWrapper.style.opacity = "0";
+          setTimeout(() => {
+            loader.style.opacity = "0";
+            setTimeout(() => {
+              loader.style.display = "none";
+              main.style.opacity = "1";
+              type(); // start typing intro
+            }, 600);
+          }, 400);
+        } else {
+          // Wrong password
+          passwordMessage.style.display = "block";
+          setTimeout(() => passwordMessage.style.opacity = "1", 50);
+          passwordInput.value = "";
+        }
+      }
+    });
+  }, 1200); // wait for fade out of init text
+}, 2600);
+
+
+
+
+
+
+
+
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+  
+const orbs = document.querySelector(".orbs");
+const grain = document.querySelector(".grain");
+
+let lastScrollY = 0;
+let ticking = false;
+
+function updateParallax() {
+  const scroll = lastScrollY;
+
+  // --- Parallax movement ---
+  const orbOffset = scroll * 0.08;
+  const grainOffset = scroll * 0.02;
+  orbs.style.transform = `translate3d(0, ${orbOffset}px, 0)`;
+  grain.style.transform = `translate3d(0, ${grainOffset}px, 0)`;
+
+  // --- Subtle opacity shift for grain ---
+  const maxOpacityShift = 0.05;
+  grain.style.opacity = 0.06 + Math.min(scroll / 500, maxOpacityShift);
+
+  // --- Orbs: spread + continuous color shift ---
+  const hueShift = (scroll / 20) % 360;      // keeps rotating indefinitely
+  const lightShift = Math.sin(scroll / 200) * 0.1; // oscillates ±2%
+  const spreadShift = Math.min(scroll / 5, 600);
+  const alphaShift = Math.min(scroll / 1000, 0.2);
+
+  orbs.style.background = `
+    radial-gradient(circle at 15% 30%, hsla(${200 + hueShift}, 60%, ${8 + lightShift}%, ${0.02 + alphaShift}) 0%, transparent 70%),
+    radial-gradient(circle at 80% 65%, hsla(${60 + hueShift}, 90%, ${95 - lightShift}%, ${0.01 + alphaShift}) 0%, transparent 75%)
+  `;
+
+  // --- Grain color shift ---
+  grain.style.backgroundImage = `
+    repeating-linear-gradient(
+      45deg,
+      hsla(${hueShift}, 20%, ${50 + lightShift}%, 0.02),
+      hsla(${hueShift}, 20%, ${50 + lightShift}%, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      hsla(${hueShift}, 20%, ${50 + lightShift}%, 0.02),
+      hsla(${hueShift}, 20%, ${50 + lightShift}%, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    )
+  `;
+
+  ticking = false;
+}
+
+// Scroll listener
+window.addEventListener("scroll", () => {
+  lastScrollY = window.scrollY;
+  if (!ticking) {
+    requestAnimationFrame(updateParallax);
+    ticking = true;
+  }
+}, { passive: true });
+
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
